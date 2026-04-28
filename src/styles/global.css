@@ -5,55 +5,17 @@
 @tailwind utilities;
 
 @layer base {
-  :root {
-    --background: 0 0% 100%;
-    --foreground: 217 33% 16%;
-    --border: 210 14% 96%;
-    --input: 210 14% 96%;
-    --ring: 168 87% 30%;
-
-    --primary: 168 87% 30%;
-    --primary-foreground: 0 0% 100%;
-    --primary-light: 168 100% 97%;
-    --primary-accent: 168 83% 41%;
-
-    --secondary: 210 14% 96%;
-    --secondary-foreground: 217 33% 16%;
-
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 100%;
-
-    --muted: 210 14% 96%;
-    --muted-foreground: 215 16% 47%;
-
-    --accent: 168 100% 97%;
-    --accent-foreground: 168 87% 30%;
-
-    --card: 0 0% 100%;
-    --card-foreground: 217 33% 16%;
-
-    --popover: 0 0% 100%;
-    --popover-foreground: 217 33% 16%;
-
-    --radius: 0.75rem;
-  }
-
-  * {
-    @apply border-border;
-  }
-
   html {
     scroll-behavior: smooth;
   }
 
   body {
-    @apply bg-background text-foreground;
     font-family: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    overflow-x: clip;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     line-height: 1.8;
     letter-spacing: 0.02em;
+    overflow-x: clip;
   }
 
   html[lang="zh"] body {
@@ -64,130 +26,5 @@
   h1, h2, h3, h4, h5, h6 {
     text-wrap: balance;
     letter-spacing: 0.03em;
-  }
-}
-
-@layer components {
-  .section-wrapper {
-    @apply py-[80px] md:py-[120px] px-[24px] md:px-[40px] max-w-[1200px] mx-auto w-full;
-  }
-
-  .badge-teal {
-    @apply bg-[#F0FDFB] text-[#0D9488] px-4 py-1.5 rounded-full text-sm font-bold tracking-wider inline-block;
-  }
-
-  .highlight-text {
-    @apply text-[20px] md:text-[24px] font-bold text-primary mt-16 text-center;
-  }
-
-  .btn-primary {
-    @apply bg-primary text-white hover:bg-primary-accent rounded-xl active:scale-[0.98] transition-all duration-300 font-medium px-8 py-4 inline-flex items-center justify-center shadow-md hover:shadow-lg;
-  }
-
-  .btn-secondary {
-    @apply bg-white text-primary border border-primary hover:bg-primary/5 rounded-xl active:scale-[0.98] transition-all duration-300 font-medium px-8 py-4 inline-flex items-center justify-center shadow-sm hover:shadow-md;
-  }
-
-  .section-gray {
-    @apply bg-[#F9FAFB] py-16 md:py-24 border-t border-[#F3F4F6];
-  }
-
-  .section-teal {
-    @apply bg-[#0D9488] py-16 md:py-24 text-white;
-  }
-
-  .timeline {
-    @apply relative max-w-[700px] mx-auto;
-  }
-
-  .timeline::before {
-    content: '';
-    @apply absolute left-[19px] top-2 bottom-2 w-[2px] bg-[#0D9488]/20;
-  }
-
-  .timeline-item {
-    @apply flex items-start gap-6 relative mb-10 last:mb-0;
-  }
-
-  .dot {
-    @apply w-[8px] h-[8px] rounded-full bg-[#0D9488] mt-[10px] z-10 flex-shrink-0 ml-[16px];
-  }
-
-  .time {
-    @apply text-[16px] font-bold text-[#0D9488] w-[100px] flex-shrink-0;
-  }
-
-  .demo-tab {
-    @apply px-6 py-3 text-[16px] font-medium text-[#4B5563] bg-white border border-[#F3F4F6] rounded-xl hover:text-[#0D9488] hover:border-[#0D9488]/30 hover:shadow-md transition-all duration-300 whitespace-nowrap cursor-pointer active:scale-95;
-  }
-
-  .demo-tab.active {
-    @apply border-[#0D9488] bg-[#F0FDFB] text-[#0D9488] font-bold shadow-sm;
-  }
-
-  .dept-panel {
-    @apply animate-in fade-in duration-500;
-  }
-
-  .section {
-    @apply py-16 md:py-24 px-6 bg-background;
-  }
-
-  .container {
-    @apply max-w-[1200px] mx-auto;
-  }
-
-  .subtitle {
-    @apply text-lg text-muted-foreground mt-4 mb-12 max-w-2xl mx-auto leading-relaxed;
-  }
-
-  .grid-3 {
-    @apply grid grid-cols-1 md:grid-cols-3 gap-8;
-  }
-
-  .grid-2 {
-    @apply grid grid-cols-1 md:grid-cols-2 gap-8;
-  }
-
-  .card {
-    @apply bg-white border border-border rounded-xl p-8 shadow-lg transition-all duration-300 hover:shadow-2xl hover:-translate-y-1;
-  }
-
-  .pricing-card {
-    @apply bg-card border border-border rounded-2xl p-8 shadow-lg transition-all duration-300 hover:shadow-xl flex flex-col h-full relative overflow-hidden;
-  }
-
-  .pricing-card.featured {
-    @apply border-2 border-primary bg-accent shadow-xl z-10;
-  }
-
-  .price {
-    @apply text-4xl md:text-5xl font-bold text-primary my-4 tracking-tight;
-  }
-
-  .price-sub {
-    @apply text-sm text-muted-foreground mb-6;
-  }
-
-  .label-tag {
-    @apply inline-block bg-primary text-white px-4 py-1.5 rounded-full text-sm font-bold tracking-wider mb-6;
-  }
-
-  .upgrade-card {
-    @apply bg-muted border border-border rounded-xl p-6 mt-8 text-center;
-  }
-}
-
-@layer utilities {
-  .text-gradient {
-    @apply bg-clip-text text-transparent;
-  }
-
-  .hide-scrollbar::-webkit-scrollbar {
-    display: none;
-  }
-  .hide-scrollbar {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
   }
 }
