@@ -1,19 +1,19 @@
 ---
 import { marked } from 'marked';
 import Layout from '../../../layouts/Layout.astro';
-import { getPostBySlug } from '../../../lib/notion.js';
+import { getPosts, getPostBySlug } from '../../../lib/notion.js';
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  return posts.map((post) => ({
+    params: { lang: post.language ?? 'zh', slug: post.slug },
+  }));
+}
 
 const { lang, slug } = Astro.params;
+const post = await getPostBySlug(lang as string, slug as string);
 
-if (!lang || !['zh', 'en'].includes(lang) || !slug) {
-  return Astro.redirect('/blog');
-}
-
-const post = await getPostBySlug(lang, slug);
-
-if (!post) {
-  return Astro.redirect('/blog');
-}
+if (!post) throw new Error(`Post not found: ${lang}/${slug}`);
 
 const htmlContent = marked.parse(post.markdown ?? '', { async: false });
 
@@ -53,7 +53,7 @@ const dateLocale = lang === 'zh' ? 'zh-TW' : 'en-US';
 ---
 
 <Layout
-  title={`${post.title} - BusyCow Blog`}
+  title={`${post.title} - GeoKernel Blog`}
   description={post.description ?? undefined}
   ogImage={post.cover ?? undefined}
   canonicalUrl={Astro.url.href}

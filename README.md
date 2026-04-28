@@ -1,43 +1,56 @@
-# Astro Starter Kit: Minimal
+# GeoKernel Website
+
+Official website for [GeoKernel](https://geokernel.com) by DataXquad — tactical geospatial intelligence platform for offline drone imagery processing.
+
+## Tech Stack
+
+- [Astro](https://astro.build) (SSR, Node adapter)
+- React islands for interactive components
+- Tailwind CSS
+- Notion CMS for Blog
+
+## Getting Started
 
 ```sh
-npm create astro@latest -- --template minimal
+npm install
+npm run dev       # http://localhost:4321
+npm run build
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Environment Variables
 
-## 🚀 Project Structure
+Copy `.env.example` to `.env` and fill in:
 
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+```
+NOTION_TOKEN=your_notion_integration_token
+NOTION_DATABASE_ID=your_notion_database_id
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## Project Structure
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+```
+src/
+├── components/      # Header, Footer, island wrappers
+├── contexts/        # LanguageContext (zh/en)
+├── layouts/         # Layout.astro (blog pages)
+├── lib/             # notion.js (Notion API)
+├── pages/           # index.astro, blog/*, sitemap.xml.ts
+├── styles/          # global.css
+├── translations.js  # All bilingual content
+└── views/           # HomeApp, HomePage (all landing page sections)
+```
 
-Any static assets, like images, can be placed in the `public/` directory.
+## Blog (Notion CMS)
 
-## 🧞 Commands
+Blog posts are pulled from a Notion database. Required properties:
 
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+| Property    | Type        | Notes                  |
+| ----------- | ----------- | ---------------------- |
+| Title       | Title       |                        |
+| Status      | Select      | Set to `已發布` to publish |
+| Date        | Date        |                        |
+| Slug        | Rich Text   | URL slug               |
+| Language    | Select      | `zh` or `en`           |
+| Description | Rich Text   | Post excerpt           |
+| Tags        | Multi-select |                       |
+| Cover       | Cover image |                       |

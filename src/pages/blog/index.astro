@@ -185,7 +185,7 @@ const allTags = [...new Set(posts.flatMap((p) => p.tags))].sort();
   let currentPage = 1;
   let activeLang = (typeof localStorage !== 'undefined' ? localStorage.getItem('language') : null) ?? 'zh';
 
-  window.addEventListener('busycow:lang', (e: Event) => {
+  window.addEventListener('geokernel:lang', (e: Event) => {
     activeLang = (e as CustomEvent<string>).detail;
     currentPage = 1;
     renderPage();
