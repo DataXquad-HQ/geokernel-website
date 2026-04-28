@@ -1,0 +1,54 @@
+---
+import '../styles/global.css';
+import HeaderIsland from '../components/HeaderIsland.jsx';
+import FooterIsland from '../components/FooterIsland.jsx';
+
+interface Props {
+  title: string;
+  description?: string;
+  ogImage?: string;
+  canonicalUrl?: string;
+  wide?: boolean;
+}
+
+const SITE = 'https://busycow.dataxquad.com';
+const { title, description = 'Insights, updates, and stories from BusyCow.', ogImage, canonicalUrl, wide = false } = Astro.props;
+const resolvedOgImage = ogImage ?? `${SITE}/og-image.png`;
+const resolvedCanonical = canonicalUrl ?? Astro.url.href;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={resolvedCanonical} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content={resolvedCanonical} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={resolvedOgImage} />
+    <meta property="og:site_name" content="BusyCow Blog" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={resolvedOgImage} />
+
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/favicon.png" />
+  </head>
+  <body class="bg-white text-gray-900 min-h-screen flex flex-col">
+    <HeaderIsland client:only="react" />
+    <main class={`flex-grow pt-24 pb-10 ${wide ? 'max-w-5xl' : 'max-w-2xl'} mx-auto px-6`}>
+      <slot />
+    </main>
+    <FooterIsland client:only="react" />
+  </body>
+</html>
