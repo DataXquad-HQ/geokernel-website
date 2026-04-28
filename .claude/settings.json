@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:4321/)",
+      "Bash(npx astro *)",
+      "Bash(node_modules/.bin/astro dev *)",
+      "Bash(curl -s -o /dev/null -w \"HTTP status: %{http_code}\" http://localhost:4321/)",
+      "Bash(curl -s http://localhost:4322/)",
+      "Bash(node_modules/.bin/astro check *)",
+      "Bash(node_modules/.bin/astro build *)",
+      "Bash(open http://localhost:4321/)",
+      "Bash(curl -s http://localhost:4321/blog)",
+      "Bash(open http://localhost:4321/blog)"
+    ]
+  }
+}

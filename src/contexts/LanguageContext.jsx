@@ -1,14 +1,14 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import { translations } from '../translations.js';
 
-const LANG_EVENT = 'busycow:lang';
+const LANG_EVENT = 'geokernel:lang';
 
 const LanguageContext = createContext();
 
 export const LanguageProvider = ({ children }) => {
   const [language, setLanguageState] = useState(() => {
-    if (typeof window === 'undefined') return 'en';
-    return localStorage.getItem('language') || 'en';
+    if (typeof window === 'undefined') return 'zh';
+    return localStorage.getItem('language') || 'zh';
   });
 
   const setLanguage = (lang) => {
@@ -30,16 +30,11 @@ export const LanguageProvider = ({ children }) => {
     }
   }, [language]);
 
-  const t = (section, key) => {
-    return translations[language]?.[section]?.[key] || translations['en']?.[section]?.[key] || key;
-  };
-
-  const getSection = (section) => {
-    return translations[language]?.[section] || translations['en']?.[section] || {};
-  };
+  const tr = translations[language] || translations['zh'];
+  const getSection = (section) => tr?.[section] || {};
 
   return (
-    <LanguageContext.Provider value={{ language, setLanguage, t, getSection }}>
+    <LanguageContext.Provider value={{ language, setLanguage, tr, getSection }}>
       {children}
     </LanguageContext.Provider>
   );
@@ -47,8 +42,6 @@ export const LanguageProvider = ({ children }) => {
 
 export const useLanguage = () => {
   const context = useContext(LanguageContext);
-  if (!context) {
-    throw new Error('useLanguage must be used within a LanguageProvider');
-  }
+  if (!context) throw new Error('useLanguage must be used within a LanguageProvider');
   return context;
 };

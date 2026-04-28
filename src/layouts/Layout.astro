@@ -11,8 +11,8 @@ interface Props {
   wide?: boolean;
 }
 
-const SITE = 'https://busycow.dataxquad.com';
-const { title, description = 'Insights, updates, and stories from BusyCow.', ogImage, canonicalUrl, wide = false } = Astro.props;
+const SITE = 'https://geokernel.com';
+const { title, description = 'Insights, updates, and stories from GeoKernel.', ogImage, canonicalUrl, wide = false } = Astro.props;
 const resolvedOgImage = ogImage ?? `${SITE}/og-image.png`;
 const resolvedCanonical = canonicalUrl ?? Astro.url.href;
 ---
@@ -33,7 +33,7 @@ const resolvedCanonical = canonicalUrl ?? Astro.url.href;
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={resolvedOgImage} />
-    <meta property="og:site_name" content="BusyCow Blog" />
+    <meta property="og:site_name" content="GeoKernel Blog" />
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />

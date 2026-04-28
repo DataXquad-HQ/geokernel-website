@@ -1,7 +1,7 @@
 import type { APIRoute } from 'astro';
 import { getPosts } from '../lib/notion.js';
 
-const SITE = 'https://busycow.dataxquad.com';
+const SITE = 'https://geokernel.com';
 
 export const GET: APIRoute = async () => {
   let posts: { slug: string }[] = [];

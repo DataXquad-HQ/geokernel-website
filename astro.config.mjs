@@ -4,7 +4,7 @@ import react from '@astrojs/react';
 import node from '@astrojs/node';
 
 export default defineConfig({
-  site: 'https://busycow.dataxquad.com',
+  site: 'https://geokernel.com',
   output: 'server',
   adapter: node({
     mode: 'standalone',
