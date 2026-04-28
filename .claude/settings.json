@@ -11,7 +11,8 @@
       "Bash(open http://localhost:4321/)",
       "Bash(curl -s http://localhost:4321/blog)",
       "Bash(open http://localhost:4321/blog)",
-      "Bash(git rm *)"
+      "Bash(git rm *)",
+      "Read(//Users/hunter/Desktop/Work/BusyCow/busycow-website/**)"
     ]
   }
 }
