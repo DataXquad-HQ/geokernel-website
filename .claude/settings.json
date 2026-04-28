@@ -10,7 +10,8 @@
       "Bash(node_modules/.bin/astro build *)",
       "Bash(open http://localhost:4321/)",
       "Bash(curl -s http://localhost:4321/blog)",
-      "Bash(open http://localhost:4321/blog)"
+      "Bash(open http://localhost:4321/blog)",
+      "Bash(git rm *)"
     ]
   }
 }
