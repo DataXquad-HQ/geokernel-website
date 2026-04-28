@@ -1,19 +1,12 @@
 ---
 import { marked } from 'marked';
 import Layout from '../../../layouts/Layout.astro';
-import { getPosts, getPostBySlug } from '../../../lib/notion.js';
-
-export async function getStaticPaths() {
-  const posts = await getPosts();
-  return posts.map((post) => ({
-    params: { lang: post.language ?? 'zh', slug: post.slug },
-  }));
-}
+import { getPostBySlug } from '../../../lib/notion.js';
 
 const { lang, slug } = Astro.params;
 const post = await getPostBySlug(lang as string, slug as string);
 
-if (!post) throw new Error(`Post not found: ${lang}/${slug}`);
+if (!post) return Astro.redirect('/blog');
 
 const htmlContent = marked.parse(post.markdown ?? '', { async: false });
 
