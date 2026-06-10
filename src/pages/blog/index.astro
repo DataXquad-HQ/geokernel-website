@@ -1,6 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import { getPosts } from '../../lib/notion.js';
+import { getPosts } from '../../lib/ghost.js';
 
 const posts = await getPosts();
 
@@ -14,11 +14,11 @@ const TAG_PALETTE = [
 ];
 
 const TAG_INDEX: Record<string, number> = {
-  'Case Study': 0, '案例研究': 0,
-  'Tutorial': 1, '教學': 1,
-  'Industry Insight': 2, '產業洞察': 2,
-  'Company News': 3, '公司動態': 3,
-  'Product Update': 4, '產品更新': 4,
+  'Case Study': 0,
+  'Tutorial': 1,
+  'Industry Insight': 2,
+  'Company News': 3,
+  'Product Update': 4,
 };
 
 function tagStyle(tag: string) {
@@ -89,16 +89,15 @@ const allTags = [...new Set(posts.flatMap((p) => p.tags))].sort();
       <article
         data-tags={post.tags.join('||')}
         data-title={post.title.toLowerCase()}
-        data-description={(post.description ?? '').toLowerCase()}
-        data-language={post.language ?? 'zh'}
+        data-description={(post.excerpt ?? '').toLowerCase()}
         class="post-card group flex flex-col rounded-2xl border border-gray-100 bg-white overflow-hidden shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300"
       >
-        <a href={`/blog/${post.language ?? 'zh'}/${post.slug}`} class="flex flex-col h-full">
+        <a href={`/blog/${post.slug}`} class="flex flex-col h-full">
           <!-- Cover image -->
           <div class="aspect-[16/9] bg-gray-50 overflow-hidden flex-shrink-0">
-            {post.cover ? (
+            {post.coverImage ? (
               <img
-                src={post.cover}
+                src={post.coverImage}
                 alt={post.title}
                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               />
@@ -129,14 +128,14 @@ const allTags = [...new Set(posts.flatMap((p) => p.tags))].sort();
             <h2 class="text-base font-bold text-[#1F2937] leading-snug mb-2 group-hover:text-[#0D9488] transition-colors line-clamp-2">
               {post.title}
             </h2>
-            {post.description && (
+            {post.excerpt && (
               <p class="text-sm text-gray-500 leading-relaxed line-clamp-2 mb-3 flex-grow">
-                {post.description}
+                {post.excerpt}
               </p>
             )}
             <time class="text-xs text-gray-400 mt-auto pt-2 block">
-              {post.date
-                ? new Date(post.date).toLocaleDateString('en-US', {
+              {post.publishedAt
+                ? new Date(post.publishedAt).toLocaleDateString('en-US', {
                     year: 'numeric',
                     month: 'short',
                     day: 'numeric',
@@ -183,25 +182,16 @@ const allTags = [...new Set(posts.flatMap((p) => p.tags))].sort();
   let activeTag = 'all';
   let searchQuery = '';
   let currentPage = 1;
-  let activeLang = (typeof localStorage !== 'undefined' ? localStorage.getItem('language') : null) ?? 'zh';
-
-  window.addEventListener('geokernel:lang', (e: Event) => {
-    activeLang = (e as CustomEvent<string>).detail;
-    currentPage = 1;
-    renderPage();
-  });
 
   function getFilteredCards() {
     return cards.filter(card => {
-      const lang = card.dataset.language ?? 'zh';
-      const langMatch = lang === activeLang;
       const tags = (card.dataset.tags ?? '').split('||');
       const tagMatch = activeTag === 'all' || tags.includes(activeTag);
       const q = searchQuery;
       const textMatch = !q
         || (card.dataset.title ?? '').includes(q)
         || (card.dataset.description ?? '').includes(q);
-      return langMatch && tagMatch && textMatch;
+      return tagMatch && textMatch;
     });
   }
 
@@ -274,7 +264,6 @@ const allTags = [...new Set(posts.flatMap((p) => p.tags))].sort();
     renderPagination(totalPages);
   }
 
-  // Tag filter
   filterButtons.forEach(btn => {
     btn.addEventListener('click', () => {
       activeTag = btn.dataset.filter ?? 'all';
@@ -299,7 +288,6 @@ const allTags = [...new Set(posts.flatMap((p) => p.tags))].sort();
     });
   });
 
-  // Text search
   searchInput?.addEventListener('input', () => {
     searchQuery = searchInput.value.toLowerCase().trim();
     currentPage = 1;
