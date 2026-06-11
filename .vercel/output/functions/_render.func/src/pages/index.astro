@@ -1,0 +1,42 @@
+---
+import '../styles/global.css';
+import HomeApp from '../views/HomeApp.jsx';
+
+const SITE = 'https://geokernel.com';
+const title = 'GeoKernel - Tactical Intelligence at the Edge';
+const description = 'GeoKernel 2.0. Mission-critical intelligence, 100% offline. Instant drone imagery processing for disaster relief and real-time decision making.';
+const ogImage = `${SITE}/og-image.png`;
+---
+
+<!doctype html>
+<html lang="zh">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={SITE} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={SITE} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:locale" content="zh_TW" />
+    <meta property="og:locale:alternate" content="en_US" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/favicon.png" />
+  </head>
+  <body>
+    <HomeApp client:load />
+  </body>
+</html>

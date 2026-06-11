@@ -26,6 +26,6 @@ pnpm-debug.log*
 # jetbrains setting folder
 .idea/
 
-# Claude Code local settings
-.claude/
-.vercel
+# Vercel local config only (not output)
+.vercel/project.json
+.vercel/README.txt
