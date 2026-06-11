@@ -33,10 +33,8 @@ export async function getPosts() {
   const response = await notion.databases.query({
     database_id: import.meta.env.NOTION_DATABASE_ID,
     filter: {
-      or: [
-        { property: 'Status', select: { equals: '已發布' } },
-        { property: 'Status', select: { equals: '草稿' } },
-      ],
+      property: 'Status',
+      select: { equals: '已發布' },
     },
     sorts: [{ property: 'Date', direction: 'descending' }],
   });
@@ -60,12 +58,7 @@ export async function getPostBySlug(lang, slug) {
       database_id: import.meta.env.NOTION_DATABASE_ID,
       filter: {
         and: [
-          {
-            or: [
-              { property: 'Status', select: { equals: '已發布' } },
-              { property: 'Status', select: { equals: '草稿' } },
-            ],
-          },
+          { property: 'Status', select: { equals: '已發布' } },
           { property: 'Slug', rich_text: { equals: slug } },
           { property: 'Language', select: { equals: lang } },
         ],

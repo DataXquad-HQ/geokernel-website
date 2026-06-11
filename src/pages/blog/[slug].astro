@@ -1,18 +1,12 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import { getPosts, getPostBySlug } from '../../lib/notion.js';
+import { getPostBySlug } from '../../lib/notion.js';
 import { marked } from 'marked';
 
-export async function getStaticPaths() {
-  const posts = await getPosts();
-  return posts.map((post) => ({
-    params: { slug: post.slug },
-    props: { lang: post.language ?? 'zh' },
-  }));
-}
-
 const { slug } = Astro.params;
-const { lang } = Astro.props;
+
+// SSR: 從 URL 取得 lang，預設 zh
+const lang = Astro.url.searchParams.get('lang') ?? 'zh';
 const post = await getPostBySlug(lang, slug);
 
 if (!post) {
@@ -57,7 +51,7 @@ const contentHtml = marked(post.markdown ?? '');
     <div class="flex items-center gap-4 text-sm text-gray-400 mb-8 pb-8 border-b border-gray-100">
       {post.date && (
         <time>
-          {new Date(post.date).toLocaleDateString('en-US', {
+          {new Date(post.date).toLocaleDateString('zh-TW', {
             year: 'numeric',
             month: 'long',
             day: 'numeric',
