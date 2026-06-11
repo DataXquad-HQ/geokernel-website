@@ -1,12 +1,22 @@
 import { Client } from '@notionhq/client';
 import { NotionToMarkdown } from 'notion-to-md';
 
-// Support both Astro SSR (import.meta.env) and Node.js (process.env)
-const NOTION_TOKEN = import.meta.env?.NOTION_TOKEN ?? process.env.NOTION_TOKEN;
-const NOTION_DATABASE_ID = import.meta.env?.NOTION_DATABASE_ID ?? process.env.NOTION_DATABASE_ID;
+// Always use process.env — never import.meta.env (Vite inlines it at build time)
+function getClient() {
+  const token = process.env.NOTION_TOKEN;
+  if (!token) throw new Error('NOTION_TOKEN is not set');
+  return new Client({ auth: token });
+}
 
-const notion = new Client({ auth: NOTION_TOKEN });
-const n2m = new NotionToMarkdown({ notionClient: notion });
+function getN2M(notion) {
+  return new NotionToMarkdown({ notionClient: notion });
+}
+
+function getDBId() {
+  const id = process.env.NOTION_DATABASE_ID;
+  if (!id) throw new Error('NOTION_DATABASE_ID is not set');
+  return id;
+}
 
 function extractTags(page) {
   const tagsMulti = page.properties.Tags?.multi_select;
@@ -34,8 +44,9 @@ function extractSlug(page) {
 }
 
 export async function getPosts() {
+  const notion = getClient();
   const response = await notion.databases.query({
-    database_id: NOTION_DATABASE_ID,
+    database_id: getDBId(),
     filter: {
       property: 'Status',
       select: { equals: '已發布' },
@@ -56,10 +67,12 @@ export async function getPosts() {
 }
 
 export async function getPostBySlug(lang, slug) {
+  const notion = getClient();
+  const n2m = getN2M(notion);
   let response;
   try {
     response = await notion.databases.query({
-      database_id: NOTION_DATABASE_ID,
+      database_id: getDBId(),
       filter: {
         and: [
           { property: 'Status', select: { equals: '已發布' } },
