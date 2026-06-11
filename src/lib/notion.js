@@ -1,7 +1,11 @@
 import { Client } from '@notionhq/client';
 import { NotionToMarkdown } from 'notion-to-md';
 
-const notion = new Client({ auth: import.meta.env.NOTION_TOKEN });
+// Support both Astro SSR (import.meta.env) and Node.js (process.env)
+const NOTION_TOKEN = import.meta.env?.NOTION_TOKEN ?? process.env.NOTION_TOKEN;
+const NOTION_DATABASE_ID = import.meta.env?.NOTION_DATABASE_ID ?? process.env.NOTION_DATABASE_ID;
+
+const notion = new Client({ auth: NOTION_TOKEN });
 const n2m = new NotionToMarkdown({ notionClient: notion });
 
 function extractTags(page) {
@@ -31,7 +35,7 @@ function extractSlug(page) {
 
 export async function getPosts() {
   const response = await notion.databases.query({
-    database_id: import.meta.env.NOTION_DATABASE_ID,
+    database_id: NOTION_DATABASE_ID,
     filter: {
       property: 'Status',
       select: { equals: '已發布' },
@@ -55,7 +59,7 @@ export async function getPostBySlug(lang, slug) {
   let response;
   try {
     response = await notion.databases.query({
-      database_id: import.meta.env.NOTION_DATABASE_ID,
+      database_id: NOTION_DATABASE_ID,
       filter: {
         and: [
           { property: 'Status', select: { equals: '已發布' } },

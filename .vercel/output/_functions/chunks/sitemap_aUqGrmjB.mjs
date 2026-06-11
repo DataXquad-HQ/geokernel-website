@@ -1,4 +1,4 @@
-import { a as getPosts } from './notion_BeF_SylC.mjs';
+import { a as getPosts } from './notion_X8J1GhIM.mjs';
 
 const SITE = "https://geokernel.com";
 const GET = async () => {

@@ -1,6 +1,6 @@
-import { c as createComponent } from './astro-component_BM_JPqLC.mjs';
+import { c as createComponent } from './astro-component_D-D3LUQr.mjs';
 import 'piccolore';
-import { h as addAttribute, p as renderHead, l as renderComponent, r as renderTemplate } from './entrypoint_B3T50vk6.mjs';
+import { h as addAttribute, p as renderHead, l as renderComponent, r as renderTemplate } from './entrypoint_SRkhnYlP.mjs';
 /* empty css                 */
 import { jsx, jsxs } from 'react/jsx-runtime';
 import { createContext, useState, useEffect, useContext } from 'react';

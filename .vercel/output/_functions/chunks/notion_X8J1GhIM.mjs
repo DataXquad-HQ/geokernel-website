@@ -1,7 +1,9 @@
 import { Client } from '@notionhq/client';
 import { NotionToMarkdown } from 'notion-to-md';
 
-const notion = new Client({ auth: "ntn_C22060865065orBj6WGimQSkGlxfudzO62E9Bi5VPLu7KZ" });
+const NOTION_TOKEN = "ntn_...KZ";
+const NOTION_DATABASE_ID = "3500837e356a8065a3f5efe38c002ea3";
+const notion = new Client({ auth: NOTION_TOKEN });
 const n2m = new NotionToMarkdown({ notionClient: notion });
 function extractTags(page) {
   const tagsMulti = page.properties.Tags?.multi_select;
@@ -24,7 +26,7 @@ function extractSlug(page) {
 }
 async function getPosts() {
   const response = await notion.databases.query({
-    database_id: "3500837e356a8065a3f5efe38c002ea3",
+    database_id: NOTION_DATABASE_ID,
     filter: {
       property: "Status",
       select: { equals: "已發布" }
@@ -46,7 +48,7 @@ async function getPostBySlug(lang, slug) {
   let response;
   try {
     response = await notion.databases.query({
-      database_id: "3500837e356a8065a3f5efe38c002ea3",
+      database_id: NOTION_DATABASE_ID,
       filter: {
         and: [
           { property: "Status", select: { equals: "已發布" } },
