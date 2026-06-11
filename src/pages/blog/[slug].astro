@@ -1,18 +1,25 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import { getPosts, getPost } from '../../lib/ghost.js';
+import { getPosts, getPostBySlug } from '../../lib/notion.js';
+import { marked } from 'marked';
 
 export async function getStaticPaths() {
   const posts = await getPosts();
-  return posts.map((post) => ({ params: { slug: post.slug } }));
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { lang: post.language ?? 'zh' },
+  }));
 }
 
 const { slug } = Astro.params;
-const post = await getPost(slug);
+const { lang } = Astro.props;
+const post = await getPostBySlug(lang, slug);
 
 if (!post) {
   return Astro.redirect('/blog');
 }
+
+const contentHtml = marked(post.markdown ?? '');
 ---
 
 <Layout title={post.title}>
@@ -24,9 +31,9 @@ if (!post) {
     </a>
 
     <!-- Cover image -->
-    {post.coverImage && (
+    {post.cover && (
       <div class="aspect-[16/9] rounded-2xl overflow-hidden mb-8 bg-gray-100">
-        <img src={post.coverImage} alt={post.title} class="w-full h-full object-cover" />
+        <img src={post.cover} alt={post.title} class="w-full h-full object-cover" />
       </div>
     )}
 
@@ -48,24 +55,21 @@ if (!post) {
 
     <!-- Meta -->
     <div class="flex items-center gap-4 text-sm text-gray-400 mb-8 pb-8 border-b border-gray-100">
-      {post.publishedAt && (
+      {post.date && (
         <time>
-          {new Date(post.publishedAt).toLocaleDateString('en-US', {
+          {new Date(post.date).toLocaleDateString('en-US', {
             year: 'numeric',
             month: 'long',
             day: 'numeric',
           })}
         </time>
       )}
-      {post.readingTime > 0 && (
-        <span>{post.readingTime} min read</span>
-      )}
-      {post.authors.length > 0 && (
-        <span>by {post.authors.join(', ')}</span>
-      )}
     </div>
 
     <!-- Content -->
-    <div class="prose prose-lg max-w-none prose-headings:text-[#1F2937] prose-a:text-[#0D9488] prose-a:no-underline hover:prose-a:underline" set:html={post.content} />
+    <div
+      class="prose prose-lg max-w-none prose-headings:text-[#1F2937] prose-a:text-[#0D9488] prose-a:no-underline hover:prose-a:underline"
+      set:html={contentHtml}
+    />
   </article>
 </Layout>
