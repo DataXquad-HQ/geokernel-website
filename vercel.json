@@ -1,5 +1,22 @@
 {
   "framework": "astro",
   "buildCommand": "astro build",
-  "outputDirectory": ".vercel/output"
+  "outputDirectory": "dist",
+  "redirects": [
+    {
+      "source": "/blog",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/:path*",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/api/debug-env",
+      "destination": "/",
+      "permanent": true
+    }
+  ]
 }

@@ -6,8 +6,7 @@ export const translations = {
     },
     common: {
       contactSales: "Contact Sales",
-      languageName: "EN",
-      blog: "Blog"
+      languageName: "EN"
     },
     hero: {
       titleLine1: "Tactical Intelligence at the Edge.",
@@ -106,8 +105,7 @@ export const translations = {
     },
     common: {
       contactSales: "聯絡銷售團隊",
-      languageName: "中文",
-      blog: "部落格"
+      languageName: "中文"
     },
     hero: {
       titleLine1: "全球最速離線",

@@ -52,13 +52,6 @@ const Header = () => {
         </a>
 
         <div className="flex items-center gap-4">
-          <a
-            href="/blog"
-            className="text-white/70 hover:text-white text-sm font-medium transition-colors hidden sm:block"
-          >
-            {tr?.common?.blog || 'Blog'}
-          </a>
-
           <button
             onClick={toggleLanguage}
             className="text-white/70 hover:text-white text-sm font-medium transition-colors px-3 py-1.5 rounded-full border border-white/20 hover:border-white/40"

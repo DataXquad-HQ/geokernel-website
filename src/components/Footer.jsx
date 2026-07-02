@@ -16,12 +16,6 @@ const Footer = () => {
 
           <div className="flex items-center gap-6 text-sm">
             <a
-              href="/blog"
-              className="text-slate-400 hover:text-slate-200 transition-colors"
-            >
-              Blog
-            </a>
-            <a
               href="mailto:sales@dataxquad.com"
               className="text-slate-400 hover:text-slate-200 transition-colors"
             >

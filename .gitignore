@@ -29,3 +29,4 @@ pnpm-debug.log*
 # Vercel local config only (not output)
 .vercel/project.json
 .vercel/README.txt
+.vercel/output/
